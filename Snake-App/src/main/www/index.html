@@ -1,0 +1,44 @@
+<!--
+---- Copyright ® 2008-2013, Ubiquitous Dreams SARL - SIREN 508 175 437 RCS La Rochelle. 
+---- All rights reserved. 
+---- 1 rue Fleming, 17000 - La Rochelle, France.
+-->
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>SNAKE !</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+        <meta content="IE=9" http-equiv="X-UA-Compatible"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport"/>
+        
+        <!-- CSS files -->
+        <link href="boot.css" rel="stylesheet"/>
+        
+        <!-- File JS -->
+        <script src="Snake.js" type="text/javascript"></script>
+
+        <!-- jQuery -->
+        <script src="jquery.js" type="text/javascript"></script>
+
+        <!-- H-Ubu -->
+        <script src="h-ubu.js" type="text/javascript"></script>
+
+        <!-- Uju -->
+        <script src="Uju.js" type="text/javascript"></script>
+        
+        <!-- Main -->
+        <script type="text/javascript">
+           function bootstrap() {
+               window.hub.registerComponent(Ubidreams.Snake.impl, {container: "snake"});
+               window.hub.start();
+           }
+        </script>      
+
+    </head>
+
+    <body onload="bootstrap();"> <!-- call from boot.js -->
+        <div id="snake"></div>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--Parent of this component-->
+    <parent>
+        <groupId>com.snake.test</groupId>
+        <artifactId>Snake</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    
+    <!--Model version-->
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!--References-->
+    <groupId>com.snake.test</groupId>
+    <artifactId>Snake-App</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    
+    <!--Type of packaging-->
+    <packaging>js</packaging>
+    
+
+    <!-- List of plugins -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.nanoko.coffee-mill</groupId>
+                <artifactId>coffee-mill-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <skipJsLint>true</skipJsLint>
+                    <skipJsHint>true</skipJsHint>
+                    <skipCSSLint>true</skipCSSLint>
+                    <skipMinification>true</skipMinification>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <!-- List of dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.nanoko</groupId>
+            <artifactId>h-ubu</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ubidreams</groupId>
+            <artifactId>Uju</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nanoko.libs</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.9.1</version>
+            <classifier>min</classifier>
+            <type>js</type>
+        </dependency>
+    </dependencies>
+</project>
