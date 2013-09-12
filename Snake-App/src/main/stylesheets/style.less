@@ -1,0 +1,49 @@
+@import "mixins";
+
+@height: 450px;
+@width: 450px;
+@padding: 30px;
+
+body {
+  background-image: url(resources/bg.jpg);
+  background-repeat: repeat-xy;
+}
+
+#header {
+  text-align: center;
+  margin-top: 30px;
+
+  h1 {
+    font-size: 80px;
+    color: white;
+    .text-shadow(1px 2px 3px #666);
+    font-family: 'Helvetica Neue', arial, sans-serif;
+  }
+}
+
+#snake {
+  position: absolute;
+  margin: -(@height / 2 + @padding) 0 0 -(@width / 2 + @padding);
+  top: 50%;
+  left: 50%;
+  padding: @padding;
+  .border-radius(15px);
+  background: #0f4e89; /* Old browsers */
+  background: -moz-radial-gradient(center, ellipse cover,  #0f4e89 0%, #0d3d73 100%); /* FF3.6+ */
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#0f4e89), color-stop(100%,#0d3d73)); /* Chrome,Safari4+ */
+  background: -webkit-radial-gradient(center, ellipse cover,  #0f4e89 0%,#0d3d73 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-radial-gradient(center, ellipse cover,  #0f4e89 0%,#0d3d73 100%); /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover,  #0f4e89 0%,#0d3d73 100%); /* IE10+ */
+  background: radial-gradient(ellipse at center,  #0f4e89 0%,#0d3d73 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0f4e89', endColorstr='#0d3d73',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  canvas {
+    border: 1px solid silver;
+  }
+}
+
+#game-over {
+  height: @height;
+  width: @width;
+  text-align: center;
+}

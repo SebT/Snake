@@ -20,14 +20,14 @@
     snake_array: null,
     canvas: null,
     CELL_SIZE: 10,
-    DIR_RIGHT: 3,
-    DIR_LEFT: 1,
-    DIR_UP: 0,
-    DIR_DOWN: 2,
+    DIR_LEFT: 37,
+    DIR_UP: 38,
+    DIR_RIGHT: 39,
+    DIR_DOWN: 40,
     WIDTH: 450,
     HEIGHT: 450,
     DEFAULT_SNAKE_LENGTH: 5,
-    DEFAULT_SNAKE_SPEED: 100,
+    DEFAULT_SNAKE_SPEED: 300,
     BG_COLOR: "white",
     BORDER_COLOR: "silver",
     SNAKE_COLOR: "black",
@@ -39,27 +39,23 @@
       return "Snake";
     },
     configure: function(hub, configuration) {
+      var canvas;
       this.hub = hub;
       this.container = document.getElementById(configuration.container);
-      this.canvas = $('<canvas />', {
-        width: this.WIDTH,
-        height: this.HEIGHT,
+      canvas = $('<canvas />', {
+        Width: this.WIDTH,
+        Height: this.HEIGHT,
         "class": "snake-canvas"
       })[0];
-      $(this.container).append(this.canvas);
-      $(document).keydown(function(e) {
+      $(this.container).append(canvas);
+      this.canvas = canvas.getContext("2d");
+      $(document).keydown(Uju.bind(this, function(e) {
         var key;
         key = e.which;
-        if (key === "37") {
-          return this.direction = this.DIR_LEFT;
-        } else if (key === "38") {
-          return this.direction = this.DIR_UP;
-        } else if (key === "39") {
-          return this.direction = this.DIR_RIGHT;
-        } else if (key === "40") {
-          return this.direction = this.DIR_DOWN;
+        if (Math.abs(this.direction - key) !== 2) {
+          return this.direction = key;
         }
-      });
+      }));
     },
     start: function() {
       this.newGame();
@@ -77,10 +73,8 @@
       this.score = 0;
       this.create_snake();
       this.create_food();
-      if (this.game_loop != null) {
-        clearInterval(this.game_loop);
-      }
-      this.game_loop = setInterval(Uju.bind(this, this.render), this.DEFAULT_SNAKE_SPEED);
+      this.speed = this.DEFAULT_SNAKE_SPEED;
+      this.moveSnake();
     },
     /*
     # Init snake
@@ -108,6 +102,11 @@
         y: Math.round(Math.random() * (this.HEIGHT - this.CELL_SIZE) / this.CELL_SIZE)
       };
     },
+    moveSnake: function() {
+      this.render();
+      this.speed *= 1.35;
+      return this.game_loop = setTimeout(Uju.bind(this, this.moveSnake), this.speed);
+    },
     /*
     # Render the canvas with the snake
     */
@@ -122,14 +121,16 @@
       y = this.snake_array[0].y;
       if (this.direction === this.DIR_RIGHT) {
         x++;
+        console.log("right");
       } else if (this.direction === this.DIR_LEFT) {
         x--;
+        console.log("left");
       } else if (this.direction === this.DIR_UP) {
         y--;
-      } else {
-        if (this.direction === this.DIR_DOWN) {
-          y++;
-        }
+        console.log("up");
+      } else if (this.direction === this.DIR_DOWN) {
+        y++;
+        console.log("down");
       }
       if (x === -1 || x === this.WIDTH / this.CELL_SIZE || y === -1 || y === this.HEIGHT / this.CELL_SIZE || this.check_collision(x, y)) {
         this.endGame();
@@ -182,6 +183,16 @@
         i++;
       }
       return false;
+    },
+    /*
+    # End the game
+    */
+
+    endGame: function() {
+      if (this.game_loop != null) {
+        clearInterval(this.game_loop);
+      }
+      return alert("lost");
     }
   };
 

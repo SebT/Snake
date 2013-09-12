@@ -12,6 +12,7 @@ scope.Ubidreams.Snake.impl = {
   speed: null
   snake_array: null
   canvas: null
+  endPopUp: null
   CELL_SIZE: 10 # in pixels
   DIR_LEFT: 37
   DIR_UP: 38
@@ -22,6 +23,7 @@ scope.Ubidreams.Snake.impl = {
   HEIGHT: 450
   DEFAULT_SNAKE_LENGTH: 5
   DEFAULT_SNAKE_SPEED: 300 # (milliseconds to move one cell)
+  MINIMUM_SNAKE_SPEED: 20
   BG_COLOR: "white"
   BORDER_COLOR: "silver"
   SNAKE_COLOR: "black"
@@ -36,18 +38,15 @@ scope.Ubidreams.Snake.impl = {
 
     # Retrieve container
     @container = document.getElementById(configuration.container)
+    @popup = document.getElementById(configuration.gameOverPopup)
+    @scoreNode = document.getElementById(configuration.score)
 
     # Draw canvas
     canvas = $('<canvas />', {Width:@WIDTH, Height:@HEIGHT, class:"snake-canvas"})[0]
     $(@container).append(canvas)
     @canvas = canvas.getContext("2d")
+    @canvas.font = "20px Georgia";
 
-    # Set the keyboard controls
-    $(document).keydown(Uju.bind(@, (e) ->
-      key = e.which
-      # Set direction if it isn't the opposite of the current one
-      @direction = key if Math.abs(@direction-key) isnt 2
-    ))
     return
 
   start: ->
@@ -63,19 +62,26 @@ scope.Ubidreams.Snake.impl = {
   # Start new game
   ###
   newGame: ->
+    # Show canvas
+    $("canvas").show()
+    $(@popup).hide()
+
     # Init variables
     @direction = @DIR_RIGHT
     @score = 0
+
+    # Set keyboard control
+    @setKeyboardControls()
 
     # Create snake and random food
     @create_snake()
     @create_food()
 
     # Start timer to make the snake move
-    clearInterval(@game_loop) if @game_loop?
-    @game_loop = setInterval(Uju.bind(@, @render), @DEFAULT_SNAKE_SPEED)
+    @speed = @DEFAULT_SNAKE_SPEED
+    @moveSnake()
     return
-    
+
   ###
   # Init snake
   ###
@@ -101,6 +107,11 @@ scope.Ubidreams.Snake.impl = {
       y: Math.round(Math.random() * (@HEIGHT - @CELL_SIZE) / @CELL_SIZE)
     return
 
+  moveSnake: ->
+    clearTimeout(@game_loop) if @game_loop?
+    @game_loop = setTimeout(Uju.bind(@, @moveSnake), @speed)
+    @render()
+
   ###
   # Render the canvas with the snake
   ###
@@ -118,16 +129,12 @@ scope.Ubidreams.Snake.impl = {
     # Get the cell the snake is heading to
     if @direction is @DIR_RIGHT
       x++
-      console.log "right"
     else if @direction is @DIR_LEFT
       x--
-      console.log "left"
     else if @direction is @DIR_UP
       y--
-      console.log "up"
     else if @direction is @DIR_DOWN
       y++
-      console.log "down"
 
     # Check if the snake is heading out of screen or colliding with itself
     if x is -1 or x is @WIDTH / @CELL_SIZE or y is -1 or y is @HEIGHT / @CELL_SIZE or @check_collision(x, y)
@@ -141,6 +148,7 @@ scope.Ubidreams.Snake.impl = {
         x: x
         y: y
       @score++
+      @speed *= 0.9 if @speed > @MINIMUM_SNAKE_SPEED
       @create_food()
     # Else, just move the tail
     else
@@ -187,7 +195,25 @@ scope.Ubidreams.Snake.impl = {
   # End the game
   ###
   endGame: ->
-    #$(@container).html("YOU LOST!")
-    clearInterval(@game_loop) if @game_loop?
-    alert("lost")
+    clearTimeout(@game_loop) if @game_loop?
+    @disableControls()
+    $("canvas").hide()
+    $(@scoreNode).html("Your score: " + @score)
+    $(@popup).show()
+
+
+  ###
+  # Set keyboard control for arrows
+  ###
+  setKeyboardControls: ->
+    @disableControls()
+    $(document).keydown(Uju.bind(@, (e) ->
+      key = e.which
+      # Set direction if it isn't the opposite of the current one
+      @direction = key if Math.abs(@direction-key) isnt 2
+      @moveSnake()
+    ))
+
+  disableControls: ->
+    $(document).unbind("keydown")
 }
