@@ -62,5 +62,26 @@
             <classifier>min</classifier>
             <type>js</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.nanoko.factory</groupId>
+            <artifactId>enyo-canvas</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nanoko.libs</groupId>
+            <artifactId>enyo-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>js</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nanoko.libs</groupId>
+            <artifactId>enyo-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>css</type>
+        </dependency>
     </dependencies>
 </project>
