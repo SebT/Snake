@@ -6,6 +6,7 @@
 body {
   background-image: url(resources/bg.jpg);
   background-repeat: repeat-xy;
+  font-family: 'Helvetica Neue', arial, sans-serif;
 }
 #header {
   text-align: center;
@@ -15,7 +16,6 @@ body {
   font-size: 80px;
   color: white;
   text-shadow: 1px 2px 3px #666666;
-  font-family: 'Helvetica Neue', arial, sans-serif;
 }
 #snake {
   position: absolute;
@@ -29,6 +29,9 @@ body {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
+  -webkit-box-shadow: 1px 1px 10px 1px #000000;
+  -moz-box-shadow: 1px 1px 10px 1px #000000;
+  box-shadow: 1px 1px 10px 1px #000000;
   background: #0f4e89;
   /* Old browsers */
 
@@ -58,8 +61,42 @@ body {
   border: 1px solid silver;
 }
 #game-over {
-  height: 450px;
+  height: 400px;
   width: 450px;
   text-align: center;
+  background-color: white;
+  border: 1px solid silver;
+  padding-top: 50px;
+}
+#game-over h2 {
+  margin-top: 0;
+  line-height: auto;
+}
+#game-over p {
+  line-height: auto;
+  color: #1d1d1d;
+}
+#game-over button {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background-image: none;
 }
 

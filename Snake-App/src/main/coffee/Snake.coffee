@@ -36,17 +36,20 @@ scope.Ubidreams.Snake.impl = {
   configure: (hub, configuration) ->
     @hub = hub
 
-    # Retrieve container
-    @container = document.getElementById(configuration.container)
-    @popup = document.getElementById(configuration.gameOverPopup)
-    @scoreNode = document.getElementById(configuration.score)
+    # Retrieve container & game over div
+    @container = $(document.getElementById(configuration.container))
+    @popup = $(document.getElementById(configuration.gameOverPopup))
+    @scoreNode = @popup.find("p")
+    @button = @popup.find("button")
+
+    # Handle the replay button click
+    @button.click(Uju.bind(@, @newGame))
 
     # Draw canvas
     canvas = $('<canvas />', {Width:@WIDTH, Height:@HEIGHT, class:"snake-canvas"})[0]
-    $(@container).append(canvas)
+    @container.append(canvas)
     @canvas = canvas.getContext("2d")
     @canvas.font = "20px Georgia";
-
     return
 
   start: ->
@@ -64,7 +67,7 @@ scope.Ubidreams.Snake.impl = {
   newGame: ->
     # Show canvas
     $("canvas").show()
-    $(@popup).hide()
+    @popup.hide()
 
     # Init variables
     @direction = @DIR_RIGHT
@@ -198,8 +201,8 @@ scope.Ubidreams.Snake.impl = {
     clearTimeout(@game_loop) if @game_loop?
     @disableControls()
     $("canvas").hide()
-    $(@scoreNode).html("Your score: " + @score)
-    $(@popup).show()
+    @scoreNode.html("Your score: " + @score)
+    @popup.show()
 
 
   ###

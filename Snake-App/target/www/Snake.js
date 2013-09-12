@@ -43,15 +43,17 @@
     configure: function(hub, configuration) {
       var canvas;
       this.hub = hub;
-      this.container = document.getElementById(configuration.container);
-      this.popup = document.getElementById(configuration.gameOverPopup);
-      this.scoreNode = document.getElementById(configuration.score);
+      this.container = $(document.getElementById(configuration.container));
+      this.popup = $(document.getElementById(configuration.gameOverPopup));
+      this.scoreNode = this.popup.find("p");
+      this.button = this.popup.find("button");
+      this.button.click(Uju.bind(this, this.newGame));
       canvas = $('<canvas />', {
         Width: this.WIDTH,
         Height: this.HEIGHT,
         "class": "snake-canvas"
       })[0];
-      $(this.container).append(canvas);
+      this.container.append(canvas);
       this.canvas = canvas.getContext("2d");
       this.canvas.font = "20px Georgia";
     },
@@ -68,7 +70,7 @@
 
     newGame: function() {
       $("canvas").show();
-      $(this.popup).hide();
+      this.popup.hide();
       this.direction = this.DIR_RIGHT;
       this.score = 0;
       this.setKeyboardControls();
@@ -196,8 +198,8 @@
       }
       this.disableControls();
       $("canvas").hide();
-      $(this.scoreNode).html("Your score: " + this.score);
-      return $(this.popup).show();
+      this.scoreNode.html("Your score: " + this.score);
+      return this.popup.show();
     },
     /*
     # Set keyboard control for arrows
