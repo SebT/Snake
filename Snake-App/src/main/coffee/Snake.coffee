@@ -105,9 +105,15 @@ scope.Ubidreams.Snake.impl = {
   # Spawn food at random cooridnates
   ###
   create_food: ->
+    loop
+      x = Math.round(Math.random() * (@WIDTH - @CELL_SIZE) / @CELL_SIZE)
+      y = Math.round(Math.random() * (@HEIGHT - @CELL_SIZE) / @CELL_SIZE)
+      break if not @check_collision(x, y)
+
     @food =
-      x: Math.round(Math.random() * (@WIDTH - @CELL_SIZE) / @CELL_SIZE)
-      y: Math.round(Math.random() * (@HEIGHT - @CELL_SIZE) / @CELL_SIZE)
+      x: x
+      y: y
+
     return
 
   moveSnake: ->
